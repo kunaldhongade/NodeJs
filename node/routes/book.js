@@ -1,6 +1,8 @@
 const express = require("express")
 const bookRouter = express.Router()
 const connect = require("../database/db")
+const ObjectId = require('mongodb').ObjectId;
+const BookController = require('../controllers/BookController.js')
 
 // // dynamic routing parameter
 // bookRouter.get("/book", (req, res) => {
@@ -12,22 +14,16 @@ const connect = require("../database/db")
 // })
 
 const data = {
-    title: "Power of Consistency",
-    author: "Weldon Long"
+    title: "Atomic habits",
+    author: "James Clear"
 }
 
+// we want to get details of all books from user
+
 bookRouter.route("/")
-    .get(async (req, res) => {
-        const db = await connect();
-        res.send("get all books")
-    })
-    .post(async (req, res) => {
-        await db.collection('books'.insertOne(data))
-        res.send("post all books")
-    })
-    .put((req, res) => {
-        res.send("put all books")
-    })
+    .get(BookController.index)
+    .post(BookController.create)
+    .put(BookController.put)
 
 // / anything come from user is req
 // bookRouter.get("/:id", (req, res) => {
@@ -36,15 +32,8 @@ bookRouter.route("/")
 // })
 // these are the endpoints
 bookRouter.route('/:id')
-    .get((req, res) => {
-        console.log(req.params)
-        res.send(`book id is ${req.params.id}`)
-    })
-    .patch((req, res) => {
-        res.send(`single book of ID: ${req.params.id} to update`)
-    })
-    .delete((req, res) => {
-        res.send(`single book of ID: ${req.params.id} to delete`)
-    })
+    .get(BookController.show)
+    .patch(BookController.update)
+    .delete(BookController.delete)
 
 module.exports = bookRouter;
