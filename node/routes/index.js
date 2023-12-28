@@ -3,7 +3,9 @@ const router = express.Router()
 const EventEmitter = require('events')
 const myEvent = new EventEmitter()
 const bookRouter = require("./book")
+const authRouter = require("./auth")
 const path = require('path') // to create absolute path
+
 
 myEvent.on("test-event", (data) => {
     console.log("this event is listing");
@@ -30,8 +32,10 @@ router.get("/about", (req, res) => {
 
 router.use("/book", bookRouter)
 
+router.use("/auth", authRouter)
+
 router.all("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "/../page/404.html"))
 })
 
-module.exports = router
+module.exports = router 

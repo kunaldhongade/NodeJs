@@ -2,7 +2,8 @@ const express = require("express")
 const bookRouter = express.Router()
 const connect = require("../database/db")
 const ObjectId = require('mongodb').ObjectId;
-const BookController = require('../controllers/BookController.js')
+const BookController = require('../controllers/BookController.js');
+const auth = require("../middleware/auth.js");
 
 // // dynamic routing parameter
 // bookRouter.get("/book", (req, res) => {
@@ -20,7 +21,9 @@ const data = {
 
 // we want to get details of all books from user
 
-bookRouter.route("/")
+bookRouter
+    .use(auth)
+    .route("/")
     .get(BookController.index)
     .post(BookController.create)
     .put(BookController.put)
