@@ -4,15 +4,18 @@ const app = express()
 const PORT = 5000;
 const bodyParser = require('body-parser')
 const routes = require("./routes/index")
-
+const connectDB = require("./database/db")
+const auth = require("./middleware/auth.js")
 
 app.set("view engine", "pug")
+
+// app.use(auth)
+// this is test middle ware
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 // console.log(routes)
 app.use(routes)
-
 
 
 // myEvent.on("test-event", (data) => {
@@ -59,6 +62,8 @@ app.use(routes)
 //     res.send("this is 404 page not found")
 // })
 
-app.listen(PORT, () => {
-    console.log(`server is running on port https://localhost:${PORT}`)
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`server is running on port https://localhost:${PORT}`)
+    })
 })
