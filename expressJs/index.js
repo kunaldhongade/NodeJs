@@ -7,6 +7,7 @@ const taskRouter = require("./routes/task");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const quoteRouter = require("./routes/quote");
 const server = express();
 
 // console.log(process.env.DB_PASSWORD);
@@ -40,8 +41,9 @@ server.use(cors());
 // built in middleware
 // this is called body parser
 server.use(express.json()); // to read json data
+server.use(express.urlencoded({ extended: true })); // to read form data
 
-server.use(morgan("combined")); // this is logger middleware
+server.use(morgan("tiny")); // this is logger middleware
 
 // server.use(express.static(process.env.PUBLIC_DIR)); // to serve static files
 server.use(express.static(process.env.BUILD_DIR)); // to serve static files
@@ -49,6 +51,7 @@ server.use(express.static(process.env.BUILD_DIR)); // to serve static files
 server.use("/products", productRouter); // this is router middleware
 server.use("/users", userRouter);
 server.use("/task", taskRouter);
+server.use("/quotes", quoteRouter);
 
 server.get("/query", (req, res) => {
   console.log(req.query);
