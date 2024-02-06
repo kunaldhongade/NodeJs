@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <form
+      class="form-horizontal"
+      method="post"
+      action="/products"
+      enctype="application/x-www-form-urlencoded"
+    >
+      <fieldset>
+        <legend>Add Product</legend>
+
+        <div class="form-group">
+          <label htmlFor="title" class="col-md-8 control-label">
+            Title
+            <span class="text-danger"> *</span>
+          </label>
+          <div class="col-md-8">
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="title"
+              required
+              tabindex="1"
+              class="form-control input-md"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label htmlFor="description" class="col-md-8 control-label">
+            description
+          </label>
+          <div class="col-md-8">
+            <input
+              type="text"
+              id="description"
+              name="description"
+              placeholder="description"
+              tabindex="2"
+              class="form-control input-md"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label htmlFor="price" class="col-md-8 control-label"> Price </label>
+          <div class="col-md-8">
+            <input
+              id="price"
+              name="price"
+              type="text"
+              class="form-control input-md"
+              tabindex="3"
+              placeholder="discount percentage"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label htmlFor="discountPercentage" class="col-md-8 control-label">
+            Discount
+          </label>
+          <div class="col-md-8">
+            <input
+              id="discountPercentage"
+              name="discountPercentage"
+              type="text"
+              tabindex="4"
+              class="form-control input-md"
+              placeholder="discount percentage"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label htmlFor="rating" class="col-md-8"> Rating </label>
+          <div class="col-md-8">
+            <input
+              type="text"
+              class="form-control input-md"
+              name="rating"
+              id="rating"
+              tabindex="5"
+              placeholder="rating"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label htmlFor="brand" class="col-md-8"> Brand </label>
+          <div class="col-md-8">
+            <input
+              type="text"
+              class="form-control input-md"
+              id="brand"
+              required
+              name="brand"
+              tabindex="6"
+              placeholder="Enter Brand Name eg. Apple"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label htmlFor="category" class="col-md-8 control-label">
+            Category
+          </label>
+          <div class="col-md-8">
+            <select
+              name="category"
+              id="category"
+              required
+              tabindex="7"
+              class="form-control input-md"
+              defaultValue="defaultSelect"
+            >
+              <option value="defaultSelect" hidden>
+                Please Select Category
+              </option>
+              <option value="smartphones">smartphones</option>
+              <option value="laptops">laptops</option>
+              <option value="fragrances">fragrances</option>
+              <option value="skincare">skincare</option>
+              <option value="groceries">groceries</option>
+              <option value="home-decoration">home-decoration</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label htmlFor="thumbnail" class="col-md-8"> Thumbnail </label>
+          <div class="col-md-8">
+            <input
+              type="text"
+              name="thumbnail"
+              id="thumbnail"
+              required
+              tabindex="8"
+              class="form-control input-md"
+              placeholder="Enter URL for thumbnail img"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-8">
+            <button
+              type="submit"
+              name="submit"
+              tabindex="9"
+              class="btn btn-primary"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <script type="text/javascript">
+      $(document).on("keypress", "input,select", function (e) {
+        if (e.which == 13) {
+          e.preventDefault();
+          var $next = $("[tabIndex=" + (+this.tabIndex + 1) + "]");
+          console.log($next.length);
+          if (!$next.length) {
+            $next = $("[tabIndex=1]");
+          }
+          $next.focus().click();
+        }
+      });
+    </script>
+  </body>
+</html>
