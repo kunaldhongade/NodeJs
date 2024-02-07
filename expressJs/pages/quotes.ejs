@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    />
+
+    <title>Document</title>
+    <style>
+      .blockquote-custom {
+        position: relative;
+        font-size: 1.1rem;
+      }
+
+      .blockquote-custom-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -25px;
+        left: 50px;
+      }
+
+      body {
+        background: #eff0eb;
+        background-image: url("https://i.postimg.cc/MTbfnkj6/bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    </style>
+  </head>
+  <body>
+    <% for(let quote of quotes) { %> <% if(quote){ %>
+    <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mx-auto">
+            <!-- CUSTOM BLOCKQUOTE -->
+            <blockquote
+              class="blockquote blockquote-custom bg-white p-5 shadow rounded"
+            >
+              <div class="blockquote-custom-icon bg-info shadow-sm">
+                <i class="text-white"><%= quote.rank %></i>
+              </div>
+              <p class="mb-0 mt-2 font-italic"><%= quote.quote %></p>
+              <footer class="blockquote-footer pt-4 mt-4 border-top">
+                <%= quote.author %>
+              </footer>
+            </blockquote>
+            <!-- END -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <% } %> <% } %>
+</html>
