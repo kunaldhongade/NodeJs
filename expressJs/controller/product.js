@@ -1,12 +1,43 @@
 // const data = require('../data.json')
 // const products = data.products;
 const { Product } = require("../model/Product");
+const ejs = require("ejs");
+const path = require("path");
 
 // MVC model view controller
 // data is model
 // business rule
 
 // view is how we show data to user
+// view
+
+exports.getAllProductsSSR = async (req, res) => {
+  const products = await Product.find();
+
+  ejs.renderFile(
+    path.resolve(__dirname, "../pages/index.ejs"),
+    { products }, // data we can insert multiple variables
+    (err, str) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json(err);
+      } else {
+        res.status(200).send(str);
+      }
+    }
+  );
+};
+
+exports.getAddForm = async (req, res) => {
+  ejs.renderFile(path.resolve(__dirname, "../pages/add.ejs"), (err, str) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json(err);
+    } else {
+      res.status(200).send(str);
+    }
+  });
+};
 
 // controller is how we control data (model and view changes path)
 // all logic in controller
