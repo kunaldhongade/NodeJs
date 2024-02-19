@@ -38,3 +38,5 @@ coverage/
 *.swp
 .DS_Store
 Thumbs.db
+private.key
+public.key
