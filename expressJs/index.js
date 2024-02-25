@@ -4,11 +4,14 @@ const morgan = require("morgan");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 const taskRouter = require("./routes/task");
+const authRouter = require("./routes/auth");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const quoteRouter = require("./routes/quote");
 const server = express();
+const jwt = require("jsonwebtoken");
+const fs = require("fs");
 
 // console.log(process.env.DB_PASSWORD);
 //db connection
@@ -36,20 +39,50 @@ mongoose
  * eg. authentication / check for country ip
  */
 
+const publicKey = fs.readFileSync(
+  path.resolve(__dirname, "public.key"),
+  "utf-8"
+);
+const auth = (req, res, next) => {
+  try {
+    const token = req.get("Authorization");
+
+    if (!token) {
+      console.log("no token its ", token);
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+    token.split("Bearer ")[1];
+    // console.log(token);
+
+    let decoded = jwt.verify(token, publicKey);
+
+    console.log(decoded);
+    if (decoded.email) {
+      next();
+    } else {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({ message: "Unauthorized", error });
+  }
+};
+
 server.use(cors());
 
 // built in middleware
 // this is called body parser
 server.use(express.json()); // to read json data
 server.use(express.urlencoded({ extended: true })); // to read form data
-
 server.use(morgan("tiny")); // this is logger middleware
 
 // server.use(express.static(process.env.PUBLIC_DIR)); // to serve static files
 server.use(express.static(process.env.BUILD_DIR)); // to serve static files
 
-server.use("/products", productRouter); // this is router middleware
-server.use("/users", userRouter);
+server.use("/products", auth, productRouter); // this is router middleware
+server.use("/auth", authRouter);
+server.use("/users", auth, userRouter);
 server.use("/task", taskRouter);
 server.use("/quotes", quoteRouter);
 
@@ -90,16 +123,6 @@ server.get("/dParams/:name/:age/:subject", (req, res) => {
 
 // query is path/?password=123
 // this is query
-
-const auth = (req, res, next) => {
-  // console.log(req.query)
-  if (req.body.password == "123") {
-    // we need express.json() to access body object normally it cant read json we need to use middleware
-    next();
-  } else {
-    res.status(401).json({ message: "Unauthorized" });
-  }
-};
 
 // server.use(auth) this will be applied to all routes
 
