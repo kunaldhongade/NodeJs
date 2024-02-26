@@ -3,7 +3,7 @@ const userRouter = express.Router()
 
 const userController = require('../controller/user')
 
-userRouter.post('/', userController.createUser)
+userRouter
     .get('/', userController.getAllUsers)
     .get('/:id', userController.getUser)
     .put('/:id', userController.replaceUser)
