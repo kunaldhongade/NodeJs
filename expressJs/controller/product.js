@@ -77,7 +77,8 @@ exports.createUser = async (req, res) => {
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    let query = await Product.find();
+    const products = await query.sort().exec();
     res.status(200).json(products);
   } catch (error) {
     res.status(400).json(error, req);
