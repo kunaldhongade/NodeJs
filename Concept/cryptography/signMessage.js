@@ -48,4 +48,4 @@ const packageOfDataToSend = {
   signedAndEncryptedData: signedMessage,
 };
 
-module.exports = packageOfDataToSend;
+module.exports.packageOfDataToSend = packageOfDataToSend;
